@@ -4,7 +4,7 @@ class MyLinkedList {
     private Node tail;
 
     public MyLinkedList() {
-        head = new Node(-1);
+        head = new Node(-1, null);
         tail = head;
     }
 
@@ -26,7 +26,7 @@ class MyLinkedList {
     }
 
     public void addAtTail(int val) {
-        tail.next = new Node(val);
+        tail.next = new Node(val, null);
         tail = tail.next;
     }
 
@@ -59,11 +59,6 @@ class MyLinkedList {
 class Node {
     int val;
     Node next;
-
-    public Node(int val) {
-        this.val = val;
-        this.next = null;
-    }
 
     public Node(int val, Node next) {
         this.val = val;

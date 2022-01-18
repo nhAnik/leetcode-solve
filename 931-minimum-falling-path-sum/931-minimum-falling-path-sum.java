@@ -9,6 +9,9 @@ class Solution {
                 matrix[i][j] += minVal;
             }
         }
-        return Arrays.stream(matrix[n - 1]).min().getAsInt();
+        minVal = matrix[n - 1][0];
+        for (int i = 1; i < n; i++)
+            minVal = Math.min(minVal, matrix[n - 1][i]);
+        return minVal;
     }
 }

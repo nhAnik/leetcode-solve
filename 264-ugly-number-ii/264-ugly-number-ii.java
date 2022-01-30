@@ -1,16 +1,13 @@
 class Solution {
     public int nthUglyNumber(int n) {
-        PriorityQueue<Long> pq = new PriorityQueue<>();
-        pq.add(1L);
-        long ugly = 1;
-        for (int i = 0; i < n; i++) {
-            ugly = pq.peek();
-            pq.poll();
-            while (!pq.isEmpty() && pq.peek() == ugly) pq.poll();
-            pq.add(ugly * 2);
-            pq.add(ugly * 3);
-            pq.add(ugly * 5);
+        TreeSet<Long> ans = new TreeSet<>();
+        ans.add(1L);
+        for (int i = 0; i < n - 1; ++i) {
+            long first = ans.pollFirst();
+            ans.add(first * 2);
+            ans.add(first * 3);
+            ans.add(first * 5);
         }
-        return (int) ugly;
+        return ans.first().intValue();
     }
 }

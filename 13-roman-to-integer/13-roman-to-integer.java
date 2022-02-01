@@ -1,43 +1,28 @@
 class Solution {
     public int romanToInt(String s) {
-        int val = 0, len = s.length();
-        for (int i = 0; i < len; i++) {
-            if (s.charAt(i) == 'I') {
-                val++;
-                if (i + 1 < len && s.charAt(i + 1) == 'V') {
-                    val += 3;
-                    i++;
-                }
-                else if (i + 1 < len && s.charAt(i + 1) == 'X') {
-                    val += 8;
-                    i++;
-                }
+        Character prev = s.charAt(0), cur;
+        int val = roman(prev), len = s.length();
+        for (int i = 1; i < len; i++) {
+            cur = s.charAt(i);
+            if (roman(cur) > roman(prev)) {
+                val -= 2 * roman(prev);
             }
-            else if (s.charAt(i) == 'V') val += 5;
-            else if (s.charAt(i) == 'X') {
-                val += 10;
-                if (i + 1 < len && s.charAt(i + 1) == 'L') {
-                    val += 30;
-                    i++;
-                } else if (i + 1 < len && s.charAt(i + 1) == 'C') {
-                    val += 80;
-                    i++;
-                }
-            }
-            else if (s.charAt(i) == 'L') val += 50;
-            else if (s.charAt(i) == 'C') {
-                val += 100;
-                if (i + 1 < len && s.charAt(i + 1) == 'D') {
-                    val += 300;
-                    i++;
-                } else if (i + 1 < len && s.charAt(i + 1) == 'M') {
-                    val += 800;
-                    i++;
-                }
-            }
-            else if (s.charAt(i) == 'D') val += 500;
-            else if (s.charAt(i) == 'M') val += 1000;
+            val += roman(cur);
+            prev = cur;
         }
         return val;
+    }
+    
+    private int roman(Character ch) {
+        switch (ch) {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+        }
+        return -1;
     }
 }

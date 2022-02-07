@@ -1,14 +1,10 @@
 class Solution {
     public char findTheDifference(String s, String t) {
-        int[] cnt = new int[26];
-        char c = 'a';
+        int val = 0;
         for (Character ch: t.toCharArray())
-            cnt[ch - 'a']++;
+            val = val ^ ch;
         for (Character ch: s.toCharArray())
-            cnt[ch - 'a']--;
-        for (int i = 0; i < 26; i++)
-            if (cnt[i] == 1)
-                c = (char) ('a' + i);
-        return c;
+            val = val ^ ch;
+        return (char) (val);
     }
 }

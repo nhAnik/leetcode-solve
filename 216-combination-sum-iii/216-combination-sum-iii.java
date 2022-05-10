@@ -11,7 +11,7 @@ class Solution {
             res.add(new ArrayList<>(combination));
             return;
         }
-        if (k <= 0 || curNum > 9)
+        if (k < 0)
             return;
         for (int i = curNum; i <= 9; i++) {
             if (i <= n) {

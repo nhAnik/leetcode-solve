@@ -7,11 +7,14 @@ class Solution {
             if (p.charAt(j - 1) == '*') dp[0][j] = true;
             else break;
         }
+        char cs, cp;
         for (int i = 1; i <= sl; i++) {
             for (int j = 1; j <= pl; j++) {
-                if (p.charAt(j - 1) == '?' || s.charAt(i - 1) == p.charAt(j - 1))
+                cp = p.charAt(j - 1);
+                cs = s.charAt(i - 1);
+                if (cp == '?' || cs == cp)
                     dp[i][j] = dp[i - 1][j - 1];
-                else if (p.charAt(j - 1) == '*')
+                else if (cp == '*')
                     dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
             }
         }

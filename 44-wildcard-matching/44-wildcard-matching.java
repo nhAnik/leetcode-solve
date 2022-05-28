@@ -1,22 +1,20 @@
 class Solution {
     public boolean isMatch(String s, String p) {
         int sl = s.length(), pl = p.length();
-        Boolean[][] dp = new Boolean[sl + 1][pl + 1];
-        return isMatchUtil(s, p, sl - 1, pl - 1, dp);
-    }
-
-    private boolean isMatchUtil(String s, String p, int si, int pi, Boolean[][] dp) {
-        if (si < -1 || pi < -1)
-            return false;
-        if (dp[si + 1][pi + 1] != null)
-            return dp[si + 1][pi + 1];
-        if (si == -1 && pi == -1)
-            return true;
-        boolean retVal = false;
-        if ((pi >= 0 && p.charAt(pi) == '?') || (si >= 0 && pi >= 0 && s.charAt(si) == p.charAt(pi)))
-            retVal = isMatchUtil(s, p, si - 1, pi - 1, dp);
-        else if (pi >= 0 && p.charAt(pi) == '*')
-            retVal = isMatchUtil(s, p, si, pi - 1, dp) || isMatchUtil(s, p, si - 1, pi, dp);
-        return dp[si + 1][pi + 1] = retVal;
+        boolean[][] dp = new boolean[sl + 1][pl + 1];
+        dp[0][0] = true;
+        for (int j = 1; j <= pl; j++) {
+            if (p.charAt(j - 1) == '*') dp[0][j] = true;
+            else break;
+        }
+        for (int i = 1; i <= sl; i++) {
+            for (int j = 1; j <= pl; j++) {
+                if (p.charAt(j - 1) == '?' || s.charAt(i - 1) == p.charAt(j - 1))
+                    dp[i][j] = dp[i - 1][j - 1];
+                else if (p.charAt(j - 1) == '*')
+                    dp[i][j] = dp[i - 1][j] || dp[i][j - 1];
+            }
+        }
+        return dp[sl][pl];
     }
 }

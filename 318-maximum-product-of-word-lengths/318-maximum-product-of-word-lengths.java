@@ -14,8 +14,8 @@ class Solution {
         int ans = 0;
         for (int i = 0; i < len - 1; i++) {
             for (int j = 0; j < len; j++) {
-                if ((bits[i][0] & bits[j][0]) == 0)
-                    ans = Integer.max(ans, bits[i][1] * bits[j][1]);
+                if ((bits[i][0] & bits[j][0]) == 0 && bits[i][1] * bits[j][1] > ans)
+                    ans = bits[i][1] * bits[j][1];
             }
         }
         return ans;

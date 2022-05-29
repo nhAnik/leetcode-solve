@@ -4,9 +4,11 @@ class Solution {
         int[][] bits = new int[len][2];
         for (int i = 0; i < len; i++) {
             String word = words[i];
+            int bit = 0;
             for (char ch: word.toCharArray()) {
-                bits[i][0] |= 1 << (ch - 'a');
+                bit |= 1 << (ch - 'a');
             }
+            bits[i][0] = bit;
             bits[i][1] = word.length();
         }
         int ans = 0;

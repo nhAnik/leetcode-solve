@@ -4,28 +4,28 @@ class Solution {
         for (String word: words) {
             cntMap.put(word, cntMap.getOrDefault(word, 0) + 1);
         }
-        PriorityQueue<Map.Entry<String, Integer>> pq = new PriorityQueue<>(
-                (t0, t1) -> {
-                    if (t0.getValue() == t1.getValue()) return t1.getKey().compareTo(t0.getKey());
-                    else return Integer.compare(t0.getValue(), t1.getValue());
-                });
+        List<String>[] freqMap = new List[501];
         for (var entry: cntMap.entrySet()) {
-            if (pq.size() < k) pq.add(entry);
-            else {
-                Map.Entry<String, Integer> topElem = pq.peek();
-                if (Objects.equals(topElem.getValue(), entry.getValue()) && topElem.getKey().compareTo(entry.getKey()) > 0 ||
-                        topElem.getValue() < entry.getValue()) {
-                    pq.poll();
-                    pq.add(entry);
-                }
-            }
+            Integer value = entry.getValue();
+            if (freqMap[value] == null) freqMap[value] = new ArrayList<>();
+            freqMap[value].add(entry.getKey());
         }
         List<String> ans = new ArrayList<>();
-        for (int i = 0; i < k; i++) {
-            ans.add(pq.peek().getKey());
-            pq.poll();
+        int cnt = 0;
+        for (int i = 500; i > 0; i--) {
+            List<String> curList = freqMap[i];
+            if (curList == null || curList.isEmpty()) continue;
+            Collections.sort(curList);
+            int len = curList.size();
+            if (cnt + len < k) {
+                cnt += len;
+                ans.addAll(curList);
+            } else {
+                for (int j = 0; j < k- cnt; j++) ans.add(curList.get(j));
+                break;
+            }
+            if (cnt == k) break;
         }
-        Collections.reverse(ans);
         return ans;
     }
 }

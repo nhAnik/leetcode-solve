@@ -1,11 +1,11 @@
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        int m = matrix.length, n = matrix[0].length, i = 0;
-        if (target < matrix[0][0] || target > matrix[m - 1][n - 1]) return false;
-        for (int[] row: matrix) {
-            if (target >= matrix[i][0] && target <= matrix[i][n - 1] &&
-                    Arrays.binarySearch(row, target) >= 0) return true;
-            i++;
+        int rows = matrix.length, cols = matrix[0].length;
+        int r = rows - 1, c = 0;
+        while (r >= 0 && c < cols) {
+            if (matrix[r][c] == target) return true;
+            else if (target < matrix[r][c]) r--;
+            else c++;
         }
         return false;
     }

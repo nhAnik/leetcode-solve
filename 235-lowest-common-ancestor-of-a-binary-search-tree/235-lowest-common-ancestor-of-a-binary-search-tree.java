@@ -15,8 +15,12 @@ class Solution {
             p = q;
             q = tmp;
         }
+        return lcaUtil(node, p, q);
+    }
+    
+    private TreeNode lcaUtil(TreeNode node, TreeNode p, TreeNode q) {
         if (node.val >= p.val && node.val <= q.val) return node;
-        if (node.val > q.val) return lowestCommonAncestor(node.left, p, q);
-        return lowestCommonAncestor(node.right, p, q);
+        if (node.val > q.val) return lcaUtil(node.left, p, q);
+        return lcaUtil(node.right, p, q);
     }
 }
